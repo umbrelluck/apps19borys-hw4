@@ -44,4 +44,8 @@ public class PrefixMatchesITTest {
         assertThat(result, containsInAnyOrder(expResult));
     }
 
+    @Test
+    public void size() {
+        assertEquals(5,pm.size());
+    }
 }
