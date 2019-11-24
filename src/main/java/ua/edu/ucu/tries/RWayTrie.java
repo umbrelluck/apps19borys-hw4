@@ -1,6 +1,7 @@
 package ua.edu.ucu.tries;
 
 import ua.edu.ucu.queue.Queue;
+import ua.edu.ucu.queue.Stack;
 
 import java.util.*;
 
@@ -75,12 +76,12 @@ public class RWayTrie implements Trie {
     @Override
     public boolean delete(String word) {
         RWayTrie tree = this;
-        Stack<RWayTrie> stack = new Stack<>();
+        Stack stack = new Stack();
         for (int i = 0; i < word.length(); i++) {
             char chr = word.charAt(i);
             for (RWayTrie child : tree.children) {
                 if (child.value == chr) {
-                    stack.add(child);
+                    stack.push(child);
                     tree = child;
                 } else {
                     return false;
@@ -88,7 +89,7 @@ public class RWayTrie implements Trie {
             }
         }
         stack.pop();
-        RWayTrie previous = stack.pop();
+        RWayTrie previous = (RWayTrie) stack.pop();
         if (tree.value == 0) {
             return false;
         }
@@ -96,7 +97,7 @@ public class RWayTrie implements Trie {
                 word.length())) {
             previous.children.remove(tree);
             tree = previous;
-            previous = stack.pop();
+            previous = (RWayTrie) stack.pop();
         }
         return true;
     }
